@@ -1,0 +1,9 @@
+D:\koodit\backupsoftware\backupsoftware\bin\Debug\backupsoftware.exe.config
+D:\koodit\backupsoftware\backupsoftware\bin\Debug\backupsoftware.exe
+D:\koodit\backupsoftware\backupsoftware\bin\Debug\backupsoftware.pdb
+D:\koodit\backupsoftware\backupsoftware\obj\Debug\backupsoftware.csprojResolveAssemblyReference.cache
+D:\koodit\backupsoftware\backupsoftware\obj\Debug\backupsoftware.Form1.resources
+D:\koodit\backupsoftware\backupsoftware\obj\Debug\backupsoftware.Properties.Resources.resources
+D:\koodit\backupsoftware\backupsoftware\obj\Debug\backupsoftware.csproj.GenerateResource.Cache
+D:\koodit\backupsoftware\backupsoftware\obj\Debug\backupsoftware.exe
+D:\koodit\backupsoftware\backupsoftware\obj\Debug\backupsoftware.pdb

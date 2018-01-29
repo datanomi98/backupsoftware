@@ -29,7 +29,7 @@ namespace backupserver
                 using (var client = listener.AcceptTcpClient())
                 using (var stream = client.GetStream())
                 {
-
+		//haven't tested this yet 
                     var fileNamebuffer = new byte[512];
                     int filenamebytesRead;
                     Console.WriteLine("Client connected. Starting to receive the file");

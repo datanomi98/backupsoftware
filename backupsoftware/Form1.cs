@@ -78,11 +78,14 @@ namespace backupsoftware
             try
             {
 
-                sendFilename(textBox1.Text);
+               
                 //connect to the ip address
                 soc.Connect(ipendpoint);
                 string filename = textBox1.Text;
-                //soc.Send(byData);
+				string message = System.IO.Path.GetFileName(filename);
+				byte[] data = new byte[512];
+				data = Encoding.ASCII.GetBytes(message);
+                soc.Send(data);
                 //send the file
                 soc.SendFile(filename);
                 
@@ -96,17 +99,8 @@ namespace backupsoftware
                 richTextBox1.Text +=  "\n" + error.Message;
             }
         }
-        static void sendFilename(string filename)
-        {
-            IPEndPoint RemoteEndPoint = new IPEndPoint(
-                IPAddress.Parse("your ip here"), 9050);
-            Socket server = new Socket(AddressFamily.InterNetwork,
-                                       SocketType.Dgram, ProtocolType.Udp);
-
-            string message = System.IO.Path.GetFileName(filename);
-            byte[] data = Encoding.ASCII.GetBytes(message);
-            server.SendTo(data, data.Length, SocketFlags.None, RemoteEndPoint);
-        }
+       
+       
         
     }
 }

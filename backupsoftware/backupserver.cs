@@ -15,50 +15,65 @@ namespace backupserver
         public static string nameOfTheFile;
         static void Main(string[] args)
         {
-           
-            
-            Socket soc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPAddress ipReceive = IPAddress.Parse("your ip here");
-            var listener = new TcpListener(ipReceive, 11000);
-            listener.Start();
+
+            try {
+                Socket soc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                IPAddress ipReceive = IPAddress.Any;
+                var listener = new TcpListener(ipReceive, 11000);
 
 
-            while (true)
-            {
-                
-                using (var client = listener.AcceptTcpClient())
-                using (var stream = client.GetStream())
+                Console.WriteLine("listening: " + ipReceive);
+                while (true)
                 {
-		//haven't tested this yet 
-                    var fileNamebuffer = new byte[512];
-                    int filenamebytesRead;
-                    Console.WriteLine("Client connected. Starting to receive the file");
-					 while ((filenamebytesRead = stream.Read(fileNamebuffer, 0, fileNamebuffer.Length)) <= 512)
+                    listener.Start();
+                    using (var client = listener.AcceptTcpClient())
+                    using (var stream = client.GetStream())
                     {
-						nameOfTheFile = bytesRead;
-					}
-					
-					if(nameOfTheFile != ""){
-						
-					using (var output = File.Create(nameOfTheFile)){
-					 var buffer = new byte[1024];
-                    int bytesRead;
-				   while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
+                        while (true)
+                        {
+                            Byte[] data = new Byte[256];
 
-                        output.Write(buffer, 0, bytesRead);
+                            // String to store the response ASCII representation.
+                            String responseData = String.Empty;
 
+                            // Read the first batch of the TcpServer response bytes.
+                            int bytes = stream.Read(data, 0, data.Length);
+                            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                            nameOfTheFile = responseData;
+                            Console.WriteLine(nameOfTheFile);
+                            break;
+                        }
+
+
+                        if (nameOfTheFile != "")
+                        {
+
+                            using (var output = File.Create(nameOfTheFile + ".zip"))
+                            {
+                                var buffer = new byte[1024];
+                                int bytesRead;
+                                while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
+                                {
+
+                                    output.Write(buffer, 0, bytesRead);
+
+                                }
+                                listener.Stop();
+                            }
+                        }
                     }
-                    listener.Stop();
-                    }
+
+
                 }
-			}
 
-               
             }
-           
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+            }
         }
-       
-       
+
+
     }
 }
